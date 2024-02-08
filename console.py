@@ -77,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 raise KeyError()
         except SyntaxError:
-             print("** class name missing **")
+            print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
         except IndexError:
@@ -195,6 +195,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """empty line + ENTER"""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

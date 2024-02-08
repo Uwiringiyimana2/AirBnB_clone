@@ -8,6 +8,6 @@ import pytz
 
 class City(BaseModel):
     """class City that inherit from BaseModel"""
-    
+
     state_id = ""
     name = ""

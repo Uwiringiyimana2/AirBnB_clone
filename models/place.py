@@ -1,5 +1,5 @@
 #!/usr/bin/python3
- """class Place"""
+"""class Place"""
 
 from models.base_model import BaseModel
 from datetime import datetime
