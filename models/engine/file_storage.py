@@ -3,8 +3,14 @@
     class FileStorage that serializes instances to a JSON file
     and deserializes JSON file to instances
 """
-from models.base_model import BaseModel
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage():
@@ -21,7 +27,7 @@ class FileStorage():
             if isinstance(type(cls), str):
                 cls = eval(cls)
             cls_dict = {}
-            for k, v in self.__objects.items:
+            for k, v in self.__objects.items():
                 if isinstance(type(v), cls):
                     cls_dict[k] = v
             return cls_dict
