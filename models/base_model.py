@@ -2,6 +2,7 @@
 """This module defines class BaseModel that defines all common
     attributes/methods for other classes"""
 
+import models
 from datetime import datetime
 import pytz
 import uuid
