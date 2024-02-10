@@ -56,3 +56,57 @@ class test_FileStorage(unittest.TestCase):
         new.save()
         new2 = BaseModel(**thing)
         self.assertNotEqual(os.path.getsize('file.json'), 0)
+
+    def test_save(self):
+        """FileStorage save method"""
+        new = BaseModel()
+        storage.save()
+        self.assertTrue(os.path.exists('file.json'))
+
+    def test_reload(self):
+        """test reload method"""
+        new = BaseModel()
+        storage.new(new)
+        loaded = None
+        storage.save()
+        storage.reload()
+        for o in storage.all().values():
+            loaded = o
+        self.assertEqual(new.to_dict()['id'], loaded.to_dict()['id'])
+
+    def test_reload_empty(self):
+        """ reload an empty file """
+        with open('file.json', "w") as f:
+            pass
+        with self.assertRaises(ValueError):
+            storage.reload()
+
+    def test_base_model_save(self):
+        """ BaseModel save method calls save method"""
+        new = BaseModel()
+        new.save()
+        self.assertTrue(os.path.exists('file.json'))
+
+    def test_type_path(self):
+        """ confirm __file_path is str"""
+        self.assertEqual(type(storage._FileStorage__file_path), str)
+
+    def test_key_format(self):
+        """ key is properly formatted"""
+        new = BaseModel()
+        _id = new.to_dict()['id']
+        temp = None
+        storage.new(new)
+        storage.save()
+        for key in storage.all().keys():
+            temp = key
+        self.assertEqual(temp, 'BaseModel' + '.' + _id)
+
+    def test_type_objects(self):
+        """confirm __objects id a dict"""
+        self.assertEqual(type(storage.all()), dict)
+
+    def test_storage_var_created(self):
+        """ FileStorage object storage created """
+        from models.engine.file_storage import FileStorage
+        self.assertEqual(type(storage), FileStorage)
