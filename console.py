@@ -28,7 +28,7 @@ def parse(arg):
     else:
         lexer = split(arg[:brackets.span()[0]])
         ret1 = [i.strip(",") for i in lexer]
-        ret1.append(brackets.group())
+        ret1.append(curly_braces.group())
         return ret1
 
 
