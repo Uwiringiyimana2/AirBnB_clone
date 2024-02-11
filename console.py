@@ -22,8 +22,13 @@ def parse(arg):
         else:
             lexer = split(arg[:brackets.span()[0]])
             ret1 = [i.strip(",") for i in lexer]
-            ret1.append(curly_braces.group())
+            ret1.append(brackets.group())
             return ret1
+    else:
+        lexer = split(arg[:brackets.span()[0]])
+        ret1 = [i.strip(",") for i in lexer]
+        ret1.append(brackets.group())
+        return ret1
 
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter."""
@@ -59,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
             if match is not None:
                 command = [arg1[1][:match.span()[0]], match.group()[1:-1]]
                 if command[0] in adict.keys():
-                    call = "{} {}".format(arg[0], command[1])
+                    call = "{} {}".format(arg1[0], command[1])
                     return adict[command[0]](call)
         print("*** Unknown syntax: {}".format(arg))
         return False
@@ -80,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         arg1 = parse(arg)
         if len(arg1) == 0:
             print("*** class name missing **")
-        elif arg[0] not in HBNBCommand.__classes:
+        elif arg1[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             print(eval(arg1[0])().id)
@@ -168,6 +173,9 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return False
         if len(arg1) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(arg1) == 3:
             try:
                 type(eval(arg1[2])) != dict
             except NameError:
