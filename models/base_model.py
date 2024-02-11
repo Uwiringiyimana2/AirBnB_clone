@@ -3,7 +3,6 @@
     attributes/methods for other classes"""
 
 from datetime import datetime
-import pytz
 import uuid
 import models
 
