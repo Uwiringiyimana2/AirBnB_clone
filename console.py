@@ -149,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
         arg1 = parse(arg)
         count = 0
         for obj in storage.all().values():
-            if arg1[0] == obj.__class.__name__:
+            if arg1[0] == obj.__class__.__name__:
                 count += 1
         print(count)
 
