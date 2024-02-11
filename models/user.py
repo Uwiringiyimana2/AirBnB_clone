@@ -2,8 +2,6 @@
 """This module defines class User"""
 
 from models.base_model import BaseModel
-from datetime import datetime
-import pytz
 
 
 class User(BaseModel):
