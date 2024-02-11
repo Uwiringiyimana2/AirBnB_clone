@@ -1,8 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """This module defines class BaseModel that defines all common
     attributes/methods for other classes"""
 
-import models
 from datetime import datetime
 import pytz
 import uuid
@@ -21,22 +20,19 @@ class BaseModel():
                 updated_at: updated every time you change your object.
         """
         self.id = str(uuid.uuid4())
-        self.created_at = self.updated_at = datetime.utcnow()
-        if kwargs and len(kwargs) != 0:
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        if kwargs:
             for key, value in kwargs.items():
-                if key == 'created_at':
+                if key == 'created_at' or key == 'updated_at':
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                elif key == 'updated_at':
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                elif key == '__class__':
-                    pass
-                else:
+                elif key != '__class__':
                     setattr(self, key, value)
 
     def save(self):
         """updates the public instance attribute updated_at
         with the current datetime"""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
