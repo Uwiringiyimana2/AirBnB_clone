@@ -2,10 +2,9 @@
 """unittest of class BaseModel"""
 
 import datetime
-import pytz
-import uuid
 from models.base_model import BaseModel
 import unittest
+import models
 import json
 import os
 
@@ -89,8 +88,11 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
-#    def test_kwargs_one(self):
- #       """one kwargs"""
-  #      n = {}
-   #     with self.assertRaises(KeyError):
-    #        new = self.value(**n)
+    def test_to_dict_with_arg(self):
+        new = BaseModel()
+        with self.assertRaises(TypeError):
+            new.to_dict(None)
+
+
+if __name__ == "__main__":
+    unittest.main()
