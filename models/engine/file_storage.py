@@ -23,15 +23,15 @@ class FileStorage():
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
-        if cls is not None:
+        """if cls is not None:
             if isinstance(type(cls), str):
                 cls = eval(cls)
             cls_dict = {}
             for k, v in self.__objects.items():
                 if isinstance(type(v), cls):
                     cls_dict[k] = v
-            return cls_dict
-        return self.__objects
+            return cls_dict"""
+        return FileStorage.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -52,4 +52,4 @@ class FileStorage():
                     del o['__class__']
                     self.new(eval(name)(**o))
         except FileNotFoundError:
-            pass
+            return
