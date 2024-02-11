@@ -3,7 +3,7 @@
     attributes/methods for other classes"""
 
 from datetime import datetime
-import uuid
+from uuid import uuid4
 import models
 
 
@@ -18,21 +18,22 @@ class BaseModel():
                 created_at: current datetime when an instance is created
                 updated_at: updated every time you change your object.
         """
-        self.id = str(uuid.uuid4())
+        self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
-            for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                elif key != '__class__':
-                    setattr(self, key, value)
+            for k, v in kwargs.items():
+                if k == 'created_at' or k == 'updated_at':
+                    self.__dict__[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                elif k != '__class__':
+                    self.__dict__[k] = v
+        else:
+            models.storage.new(self)
 
     def save(self):
         """updates the public instance attribute updated_at
         with the current datetime"""
         self.updated_at = datetime.now()
-        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
