@@ -18,13 +18,14 @@ class BaseModel():
                 created_at: current datetime when an instance is created
                 updated_at: updated every time you change your object.
         """
+        timef = '%Y-%m-%dT%H:%M:%S.%f'
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
             for k, v in kwargs.items():
                 if k == 'created_at' or k == 'updated_at':
-                    self.__dict__[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                    self.__dict__[k] = datetime.strptime(v, timef)
                 elif k != '__class__':
                     self.__dict__[k] = v
         else:
